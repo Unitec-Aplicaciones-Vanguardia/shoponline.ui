@@ -1,0 +1,26 @@
+
+<div *ngIf="selectedProduct" class="card">
+    <div class="card-body">
+        <h3 class="card-title">
+           {{selectedProduct.name}}
+        </h3>
+        <div class="card-text">
+            <div class="form-group">
+                Precio:
+                <input type="number" class="form-control" [value]="selectedProduct.price" disabled>
+            </div>
+            <div class="form-group">
+                Inventario:
+                <input type="number" class="form-control" [value]="selectedProduct.stock" disabled>
+            </div>
+            <div class="form-group">
+                Marca:
+                <input type="text" class="form-control" [value]="selectedProduct.brandName" disabled>
+            </div>
+            <div class="form-group">
+                Categoria:
+                <input type="text" class="form-control" [value]="selectedProduct.categoryName" disabled>
+            </div>
+        </div>
+    </div>
+</div>
