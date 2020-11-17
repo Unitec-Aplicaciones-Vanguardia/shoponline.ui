@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../core/data.service';
 import { Product } from '../models/product';
 
 @Component({
@@ -9,16 +10,36 @@ import { Product } from '../models/product';
 export class ProductsComponent implements OnInit {
 
   products : Array<Product>;
+  filteredProducts : Array<Product>;
   selectedProduct : Product;
 
-  constructor() { }
+  constructor(private dataService : DataService) { }
 
   ngOnInit(): void {
-    this.products = [
-      { id:1, name: "xbox", stock:5, brandName: "Microsoft", categoryName: "consoles", price: 499 },
-      { id:2, name: "Play Station 5", stock:3, brandName: "Sony", categoryName: "consoles", price: 599 },
-      { id:3, name: "iPhone", stock:5, brandName: "Apple", categoryName: "mobile devices", price: 1200 }
-    ]
+    this.dataService.getProducts()
+      .subscribe(
+        (products : Product[]) => {
+          this.products = products;
+          this.filteredProducts = this.products;
+        },
+        error => console.log(error)
+      )
+  }
+
+  filter(productName : string){
+    if(productName){
+      this.filteredProducts = this.products.filter((product : Product) => product.name.toLowerCase().indexOf(productName.toLowerCase()) > -1);
+    }else{
+      this.filteredProducts = this.products;
+    }
+  }
+
+  filterCategory(categoryId : number){
+    if(categoryId == 0){
+      this.filteredProducts = this.products;
+    }else{
+      this.filteredProducts = this.products.filter((product : Product) => product.categoryId == categoryId);
+    }
   }
 
   onClick(product : Product) : void{

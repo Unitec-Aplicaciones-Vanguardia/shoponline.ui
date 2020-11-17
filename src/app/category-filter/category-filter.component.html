@@ -1,0 +1,5 @@
+<div class="row">
+    <select (change)="onChange($event.target.value);" class="form-control col-sm-6 mx-4">
+        <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+    </select>
+</div>

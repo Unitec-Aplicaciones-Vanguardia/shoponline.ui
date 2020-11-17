@@ -5,4 +5,5 @@ export class Product{
     id : number;
     brandName : string;
     categoryName: string;
+    categoryId: number;
 }
