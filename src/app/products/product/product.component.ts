@@ -16,10 +16,19 @@ export class ProductComponent implements OnInit {
 
   ngOnInit(): void {
     let id = +this.route.snapshot.paramMap.get('id');
-    this.dataService.getProductsById(id)
+    this.dataService.getProductById(id)
       .subscribe(
         (product : Product) => this.selectedProduct = product
       );
+  }
+
+  addToBasket(){
+    this.dataService.addProductToBasket(this.selectedProduct)
+      .subscribe(
+        data => {
+          alert('se agregó al carrito')
+        }
+      )
   }
 
 }

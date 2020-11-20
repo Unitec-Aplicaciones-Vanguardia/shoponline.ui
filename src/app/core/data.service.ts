@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
@@ -19,11 +19,16 @@ export class DataService {
       );
   }
 
-  getProductsById(id : number) : Observable<Product>{
+  getProductById(id : number) : Observable<Product>{
     return this.httpClient.get<Product>(`${this.baseUrl}/api/products/${id}`)
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  addProductToBasket(product : Product) {
+    const headers = new HttpHeaders({'#BuyerId': 'carlos.varela@unitec.edu'});
+    return this.httpClient.post(`${this.baseUrl}/api/baskets`, { productId: product.id, quantity: 1 }, { headers:headers } )
   }
 
   private handleError(error : any){
